@@ -1,7 +1,13 @@
 import React from 'react';
-import Image from 'next/image';
+import Image, { type ImageProps } from 'next/image';
 import "./article.css"
-const Article = (props) => {
+type ArticleProps = {
+  imgUrl: ImageProps['src'];
+  date: React.ReactNode;
+  text: React.ReactNode;
+};
+
+const Article = (props: ArticleProps) => {
   return (
     <div className="gpt3__blog-container_article">
       <div className="gpt3__blog-container_article-image">

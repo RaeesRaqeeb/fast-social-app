@@ -19,17 +19,10 @@ export async function POST(req: Request) {
             where: {
                 id
             },
+            include: {
+                user: true,
+            },
         })
-
-        // find the user who created the event
-        const user = await prisma.user.findUnique({
-            where: {
-                id: foundEvent?.userId!
-            }
-        })
-
-        // add the user to the event object
-        if (foundEvent) foundEvent.user = user;
 
         return NextResponse.json(
             { success: "Event Found!", event: foundEvent },

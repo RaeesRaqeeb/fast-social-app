@@ -1,8 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
+    // Fixes the uploadthing .d.cts parsing conflict by forcing standard resolution
+    serverExternalPackages: ['@uploadthing/dropzone', 'uploadthing'],
     images: {
-        domains: ['utfs.io'],
+        // Updated from deprecated domains to remotePatterns as flagged by your build logs
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'utfs.io',
+            },
+        ],
     },
     async headers() {
         return [

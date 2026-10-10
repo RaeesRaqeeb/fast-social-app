@@ -1,6 +1,11 @@
 import React from 'react';
 import "./feature.css"
-const Feature = (props) => {
+type FeatureProps = {
+  title: React.ReactNode;
+  text: React.ReactNode;
+};
+
+const Feature = (props: FeatureProps) => {
   return (
     <div className="gpt3__features-container__feature">
       <div className="gpt3__features-container__feature-title">

@@ -19,7 +19,10 @@ export const { auth, handlers, signIn } = NextAuth({
                 password: { label: 'Password', type: 'password' },
             },
             async authorize(credentials) {
-                if (!credentials?.email || !credentials.password) {
+                if (
+                    typeof credentials?.email !== 'string' ||
+                    typeof credentials.password !== 'string'
+                ) {
                     return null
                 }
 
@@ -33,14 +36,11 @@ export const { auth, handlers, signIn } = NextAuth({
                     return null
                 }
 
-                if (!user.active) {
+                if (!user.active || !user.password) {
                     throw new Error('User is not active')
                 }
 
-                const isPasswordValid = await bcryptjs.compare(
-                    credentials.password,
-                    user.password
-                )
+                const isPasswordValid = await bcryptjs.compare(credentials.password, user.password)
 
                 if (!isPasswordValid) {
                     return null

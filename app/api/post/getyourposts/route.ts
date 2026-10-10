@@ -23,18 +23,11 @@ export async function POST(req: Request) {
         const fetchedPosts = await prisma.post.findMany({
             where: {
                 userId: user?.id!
-            }
+            },
+            include: {
+                user: true,
+            },
         })
-
-        // add user details to the post who made the post
-        for (let post of fetchedPosts) {
-            const user = await prisma.user.findUnique({
-                where: {
-                    id: post.userId
-                }
-            });
-            post.user = user;
-        }
 
         return NextResponse.json(
             { success: "Posts Found!", posts: fetchedPosts },

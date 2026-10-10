@@ -1,6 +1,13 @@
 import React from 'react';
 import "./info.css"
-const INFO = (props) => {
+type InfoProps = {
+    p1?: React.ReactNode;
+    p2?: React.ReactNode;
+    p3?: React.ReactNode;
+    p4?: React.ReactNode;
+};
+
+const INFO = (props: InfoProps) => {
     return (
         <div className='text-xs text-white mt-4 cursor-pointer landing'>
             <p>{props.p1}</p>

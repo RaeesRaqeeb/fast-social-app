@@ -5,7 +5,6 @@ import { auth } from "@/lib/auth";
 export async function POST(req: Request) {
     try {
         const session = await auth();
-
         if (!session) {
             return NextResponse.json(
                 { error: "Not Authenticated!" },
@@ -14,7 +13,6 @@ export async function POST(req: Request) {
         }
         const { username } = await req.json();
 
-        // update the user's profile
         const foundUser = await prisma.user.findUnique({
             where: {
                 name: username
@@ -27,17 +25,10 @@ export async function POST(req: Request) {
             where: {
                 userId: foundUser?.id
             },
+            include: {
+                user: true,
+            },
         })
-
-        // add user details to the post who made the post
-        for (let post of foundPosts) {
-            const user = await prisma.user.findUnique({
-                where: {
-                    id: post.userId
-                }
-            });
-            post.user = user;
-        }
 
         return NextResponse.json(
             { success: "Posts Found!", user: foundUser, posts: foundPosts },
