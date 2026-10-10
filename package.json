@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
   "dev": "next dev",
-  "build": "npx prisma generate && next build",
+  "build": "npx prisma generate && next build --no-turbo",
   "start": "next start"
 },
+
 
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.3",
